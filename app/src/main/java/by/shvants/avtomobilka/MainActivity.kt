@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         lifecycleScope.launch {
-            val res = carRepository.fetchCarsFromServer()
+            val res = carRepository.fetchCarsFromServer(1)
 
             when(res) {
                 is Result.Success -> {
@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 is Result.Error -> Log.d("MainActivity", res.exception.message.orEmpty())
             }
+
         }
     }
 }

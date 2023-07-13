@@ -24,7 +24,7 @@ class CarRepository(
 
                 networkCache.addAll(cars)
 
-                RequestResult.Success(cars)
+                RequestResult.Success(networkCache)
             } catch (e: Exception) {
                 RequestResult.Error(e)
             }

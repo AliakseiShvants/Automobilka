@@ -1,8 +1,11 @@
 package by.shvants.avtomobilka.presentation
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import by.shvants.avtomobilka.base.BaseViewModel
+import by.shvants.avtomobilka.data.Car
 import by.shvants.avtomobilka.repository.CarRepository
 import by.shvants.avtomobilka.utils.RequestResult
 import kotlinx.coroutines.delay
@@ -14,21 +17,26 @@ class CarsViewModel : BaseViewModel(), KoinComponent {
 
     private val carsRepository: CarRepository by inject()
 
+    private val _carsList = MutableLiveData<List<Car>?>(null)
+
+    val carsList: LiveData<List<Car>?>
+        get() = _carsList
+
     init {
         fetchCarsFromRemote()
     }
 
-    private fun fetchCarsFromRemote() {
+    fun fetchCarsFromRemote() {
         viewModelScope.launch {
             when(val result = carsRepository.fetchCarsFromServer()) {
                 is RequestResult.Success -> {
-                    Log.d("CarsViewModel", result.value.toString())
                     hideLoading()
+                    _carsList.value = result.value as List<Car>
 
                 }
                 is RequestResult.Error -> {
-                    Log.d("CarsViewModel", result.exception.toString())
                     hideLoading()
+                    _carsList.value = emptyList()
                 }
             }
         }

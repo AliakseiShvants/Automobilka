@@ -4,12 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.shvants.avtomobilka.R
-import by.shvants.avtomobilka.data.Car
+import by.shvants.avtomobilka.domain.Car
 import by.shvants.avtomobilka.databinding.ListItemCarBinding
+import by.shvants.avtomobilka.presentation.CarsEventListener
+import by.shvants.avtomobilka.presentation.OnItemClick
 import coil.load
 import kotlin.properties.Delegates
 
 class CarsAdapter(
+    private val listener: CarsEventListener,
     private val onNextPage: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), DiffUtilAdapter {
 
@@ -47,6 +50,10 @@ class CarsAdapter(
             with(binding) {
                 ivCar.load(car.image)
                 tvCar.text = car.name
+
+                root.setOnClickListener {
+                    listener(OnItemClick(car))
+                }
             }
         }
     }

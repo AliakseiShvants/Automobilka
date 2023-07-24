@@ -15,9 +15,11 @@ import by.kirich1409.viewbindingdelegate.fragmentViewBinding
 import by.kirich1409.viewbindingdelegate.viewBinding
 import by.shvants.avtomobilka.R
 import by.shvants.avtomobilka.base.BaseFragment
+import by.shvants.avtomobilka.base.MainActivity
 import by.shvants.avtomobilka.databinding.FragmentCarsBinding
 import by.shvants.avtomobilka.presentation.adapter.CarsAdapter
 import by.shvants.avtomobilka.presentation.state.VisibilityState
+import by.shvants.avtomobilka.utils.json
 import org.koin.androidx.scope.fragmentScope
 import org.koin.androidx.scope.lifecycleScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,6 +38,7 @@ class CarsFragment : BaseFragment(R.layout.fragment_cars), KoinComponent {
 
         with(binding) {
             carsAdapter = CarsAdapter(
+                listener = this@CarsFragment::onEventClickListener,
                 onNextPage = {
                     carsViewModel.fetchCarsFromRemote()
                 }
@@ -75,6 +78,17 @@ class CarsFragment : BaseFragment(R.layout.fragment_cars), KoinComponent {
                     }
                 }
             }
+        }
+    }
+
+    private fun onEventClickListener(event: CarsEvent) {
+        when(event) {
+            is OnItemClick -> navController.navigate(
+                R.id.carsFragment_to_carDetailsFragment,
+                Bundle(1).apply {
+                    putString("car", event.car.json())
+                }
+            )
         }
     }
 }

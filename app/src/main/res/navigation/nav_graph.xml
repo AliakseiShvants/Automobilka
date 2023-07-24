@@ -6,5 +6,21 @@
 
     <fragment
         android:id="@+id/carsFragment"
-        android:name="by.shvants.avtomobilka.presentation.CarsFragment" />
+        android:name="by.shvants.avtomobilka.presentation.CarsFragment">
+
+        <action
+            app:destination="@id/carDetailsFragment"
+            android:id="@+id/carsFragment_to_carDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/carDetailsFragment"
+        android:name="by.shvants.avtomobilka.presentation.CarDetailsFragment">
+
+        <argument
+            android:name="car"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

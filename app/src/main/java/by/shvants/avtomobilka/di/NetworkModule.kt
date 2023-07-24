@@ -1,5 +1,6 @@
 package by.shvants.avtomobilka.network
 
+import by.shvants.avtomobilka.data.CarApi
 import com.google.gson.*
 import okhttp3.Cache
 import okhttp3.OkHttpClient

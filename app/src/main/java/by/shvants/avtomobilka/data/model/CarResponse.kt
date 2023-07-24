@@ -1,4 +1,4 @@
-package by.shvants.avtomobilka.network
+package by.shvants.avtomobilka.data.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -29,7 +29,7 @@ data class CarResponse(
     val forSale: Int?,
     val id: Int?,
     val image: String?,
-    val images: List<Image?>?,
+    val images: List<ImageResponse>?,
 
     @SerializedName("model_id")
     val modelId: Int?,
@@ -52,19 +52,4 @@ data class CarResponse(
     @SerializedName("transmission_name")
     val transmissionName: String?,
     val year: Int?
-)
-
-data class Image(
-    val id: Int?,
-    val image100: String?,
-    val image500: String?,
-    val index: Int?,
-
-    @SerializedName("is_primary")
-    val isPrimary: Boolean?,
-    val size: Int?,
-
-    @SerializedName("thumbnail_url")
-    val thumbnailUrl: String?,
-    val url: String?
 )

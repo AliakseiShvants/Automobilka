@@ -10,13 +10,7 @@ import by.shvants.avtomobilka.domain.Post
 import coil.load
 import kotlin.properties.Delegates
 
-class PostsAdapter(
-//    private val listener: CarsEventListener,
-    private val onNextPage: () -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), DiffUtilAdapter {
-
-    var position = 0
-        private set
+class PostsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), DiffUtilAdapter {
 
     var list: List<Post> by Delegates.observable(emptyList()) { prop, old, new ->
         autoNotify(old, new) { o, n -> o.id == n.id }
@@ -32,13 +26,6 @@ class PostsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as PostViewHolder).bind(list[position])
-//        when (position) {
-//            list.size -> {
-//                this.position = position - 2
-//                onNextPage()
-//            }
-//            else -> (holder as PostViewHolder).bind(list[position])
-//        }
     }
 
     inner class PostViewHolder(

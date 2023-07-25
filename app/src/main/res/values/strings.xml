@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Avtomobilka</string>
+    <string name="empty_posts">Постов нет</string>
 </resources>

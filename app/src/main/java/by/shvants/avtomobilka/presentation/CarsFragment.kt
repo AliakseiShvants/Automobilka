@@ -28,7 +28,6 @@ import org.koin.core.component.KoinComponent
 class CarsFragment : BaseFragment(R.layout.fragment_cars), KoinComponent {
 
     private val carsViewModel: CarsViewModel by viewModels()
-
     private val binding: FragmentCarsBinding by viewBinding()
 
     private lateinit var carsAdapter: CarsAdapter

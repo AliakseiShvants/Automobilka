@@ -25,9 +25,7 @@ class CarDetailsFragment : BaseFragment(R.layout.fragment_car_details), KoinComp
 
     private val carDetailsViewModel: CarDetailsViewModel by viewModels()
     private val binding: FragmentCarDetailsBinding by viewBinding()
-//    private val args by navArgs<CarDetailsFragmentArgs>()
 
-    //    private lateinit var carsAdapter: CarsAdapter
     private var car: Car? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,9 +84,7 @@ class CarDetailsFragment : BaseFragment(R.layout.fragment_car_details), KoinComp
                             ivAvatar.load(user.url)
                             tvName.text = user.username
                         }
-
                         else -> {
-
                         }
                     }
                 }
@@ -102,7 +98,7 @@ class CarDetailsFragment : BaseFragment(R.layout.fragment_car_details), KoinComp
                         posts?.isEmpty() == true -> {
                             rvPosts.isGone = true
                             tvError.isVisible = true
-                            tvError.text = "Постов нет"
+                            tvError.text = getString(R.string.empty_posts)
                         }
 
                         else -> {
@@ -110,9 +106,7 @@ class CarDetailsFragment : BaseFragment(R.layout.fragment_car_details), KoinComp
                             rvPosts.isVisible = posts?.isNotEmpty() == true
 
                             with(rvPosts) {
-                                adapter = PostsAdapter {
-                                    fetchPostsFromRemote(car?.id ?: 0)
-                                }.apply {
+                                adapter = PostsAdapter().apply {
                                     list = posts.orEmpty()
                                 }
                             }
@@ -121,38 +115,5 @@ class CarDetailsFragment : BaseFragment(R.layout.fragment_car_details), KoinComp
                 }
             }
         }
-
-        Log.d("Car", car.toString())
-
-//                carsList.observe(viewLifecycleOwner) { list ->
-//                    when {
-//                        list == null -> {
-//                            tvError.isGone = true
-//                            rvCars.isGone = true
-//                        }
-//                        list.isNotEmpty() -> {
-//                            tvError.isGone = true
-//
-//                            with(rvCars) {
-//                                isVisible = true
-//                                adapter = carsAdapter.apply {
-//                                    cars = list
-//                                }
-//                            }
-//
-//                            rvCars.scrollToPosition(
-//                                (rvCars.adapter as? CarsAdapter)?.position ?: 0
-//                            )
-//                        }
-//                        else -> {
-//                            tvError.isVisible = true
-//                            rvCars.isGone = true
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
-
-
 }

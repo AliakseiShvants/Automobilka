@@ -38,7 +38,7 @@ class CarsAdapter(
                 onNextPage()
             }
 
-            else -> (holder as CarViewHolder).bind(cars[position])
+            else -> (holder as CarViewHolder).bind(cars[position], position)
         }
     }
 
@@ -46,13 +46,13 @@ class CarsAdapter(
         private val binding: ListItemCarBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(car: Car) {
+        fun bind(car: Car, position: Int) {
             with(binding) {
                 ivCar.load(car.image)
                 tvCar.text = car.name
 
                 root.setOnClickListener {
-                    listener(OnItemClick(car))
+                    listener(OnItemClick(car, position))
                 }
             }
         }

@@ -30,18 +30,20 @@ class CarsFragment : BaseFragment(R.layout.fragment_cars), KoinComponent {
     private val carsViewModel: CarsViewModel by viewModels()
     private val binding: FragmentCarsBinding by viewBinding()
 
-    private lateinit var carsAdapter: CarsAdapter
+    private var carsAdapter: CarsAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            carsAdapter = CarsAdapter(
-                listener = this@CarsFragment::onEventClickListener,
-                onNextPage = {
-                    carsViewModel.fetchCarsFromRemote()
-                }
-            )
+            if (carsAdapter == null) {
+                carsAdapter = CarsAdapter(
+                    listener = this@CarsFragment::onEventClickListener,
+                    onNextPage = {
+                        carsViewModel.fetchCarsFromRemote()
+                    }
+                )
+            }
 
             with(carsViewModel) {
                 progressState.observe(viewLifecycleOwner) {
@@ -61,9 +63,8 @@ class CarsFragment : BaseFragment(R.layout.fragment_cars), KoinComponent {
 
                             with(rvCars) {
                                 isVisible = true
-                                adapter = carsAdapter.apply {
-                                    cars = list
-                                }
+                                carsAdapter?.cars = list
+                                adapter = carsAdapter
                             }
 
                             rvCars.scrollToPosition(
@@ -76,18 +77,26 @@ class CarsFragment : BaseFragment(R.layout.fragment_cars), KoinComponent {
                         }
                     }
                 }
+                scrollPosition.observe(viewLifecycleOwner) {
+                    if (it != 0) {
+                        rvCars.scrollToPosition(it)
+                    }
+                }
             }
         }
     }
 
     private fun onEventClickListener(event: CarsEvent) {
         when(event) {
-            is OnItemClick -> navController.navigate(
-                R.id.carsFragment_to_carDetailsFragment,
-                Bundle(1).apply {
-                    putString("car", event.car.json())
-                }
-            )
+            is OnItemClick -> {
+                carsViewModel.setScrollPosition(event.position)
+                navController.navigate(
+                    R.id.carsFragment_to_carDetailsFragment,
+                    Bundle(1).apply {
+                        putString("car", event.car.json())
+                    }
+                )
+            }
         }
     }
 }

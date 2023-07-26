@@ -17,9 +17,12 @@ class CarsViewModel : BaseViewModel(), KoinComponent {
     private val carsRepository: CarRepository by inject()
 
     private val _carsList = MutableLiveData<List<Car>?>(null)
+    private val _scrollPosition = MutableLiveData<Int>(0)
 
     val carsList: LiveData<List<Car>?>
         get() = _carsList
+    val scrollPosition: LiveData<Int>
+        get() = _scrollPosition
 
     init {
         fetchCarsFromRemote()
@@ -39,5 +42,9 @@ class CarsViewModel : BaseViewModel(), KoinComponent {
                 }
             }
         }
+    }
+
+    fun setScrollPosition(position: Int) {
+        _scrollPosition.value = position
     }
 }

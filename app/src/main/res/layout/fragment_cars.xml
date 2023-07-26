@@ -35,7 +35,7 @@
         android:id="@+id/tv_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Увы, но что-то пошло не так..."
+        android:text="@string/error_loading"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
